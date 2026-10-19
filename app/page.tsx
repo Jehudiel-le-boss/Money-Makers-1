@@ -17,41 +17,71 @@ import {
 import { CheckoutLink } from "../components/checkout-link";
 import { Header } from "../components/header";
 import { HeroScene } from "../components/hero-scene";
+import { ProductPreview } from "../components/product-preview";
 import { Reveal } from "../components/reveal";
+import { StatsBand } from "../components/stats-band";
+import { StickyCheckout } from "../components/sticky-checkout";
 import { getHttpsUrl } from "../lib/site";
+import {
+  CHECKOUT_CTA_LABEL,
+  formatFcfa,
+  PRODUCT_STATS,
+  SUPPORT_EMAIL,
+} from "../lib/product-stats";
 
 const topics = [
   {
-    number: "01",
     title: "IA & automatisation",
-    text: "Explorez l’intelligence artificielle et les workflows pour mieux comprendre les outils qui évoluent vite.",
+    examples: [
+      "ChatGPT de A à Z",
+      "Automatisation sur ChatGPT",
+      "Créer des images avec Midjourney",
+      "La suite de bots ChatGPT",
+      "ChatGPT + WordPress",
+    ],
     Icon: BrainCircuit,
   },
   {
-    number: "02",
     title: "Business & marketing",
-    text: "Parcourez des sujets liés au marketing digital, au contenu, à l’e-commerce et à l’entrepreneuriat.",
+    examples: [
+      "Facebook Ads, débutant à expert",
+      "Boutique Shopify de zéro",
+      "E-commerce en dropshipping",
+      "Affiliation",
+      "Pages de vente qui convertissent",
+    ],
     Icon: Briefcase,
   },
   {
-    number: "03",
     title: "Création & vidéo",
-    text: "Découvrez des ressources autour du montage, de la création de contenu et des formats sociaux.",
+    examples: [
+      "DaVinci Resolve",
+      "Premiere Pro 2024",
+      "Montage vidéo",
+      "Certification TikTok Marketing",
+      "Pack Adobe débutant",
+    ],
     Icon: Clapperboard,
   },
   {
-    number: "04",
     title: "Outils & compétences",
-    text: "Choisissez un sujet pratique : outils numériques, compétences web, productivité ou développement.",
+    examples: [
+      "Python",
+      "Excel VBA",
+      "Google Analytics 4",
+      "WordPress et Bubble",
+      "Microsoft Office 5-en-1",
+      "Prise de parole en public",
+    ],
     Icon: Layers,
   },
 ];
 
 const steps = [
-  { number: "01", title: "Choisir un sujet", text: "Partez d’une question ou d’une compétence qui vous intéresse." },
-  { number: "02", title: "Ouvrir la ressource", text: "Suivez les liens indiqués dans le catalogue vers leur source." },
-  { number: "03", title: "Apprendre & pratiquer", text: "Avancez à votre rythme, une piste à la fois." },
-  { number: "04", title: "Évaluer la suite", text: "Décidez vous-même quoi approfondir ou appliquer." },
+  { number: "01", title: "Achetez le PDF", text: "Le checkout Maketou gère le paiement et la remise du document." },
+  { number: "02", title: "Choisissez un sujet", text: "Partez d’une thématique ou d’un outil qui vous intéresse." },
+  { number: "03", title: "Ouvrez le dossier", text: "Suivez le lien indiqué vers la ressource correspondante." },
+  { number: "04", title: "Apprenez à votre rythme", text: "Explorez une piste à la fois et décidez de la suite." },
 ];
 
 const videos = [
@@ -77,9 +107,27 @@ const videos = [
 
 const faq = [
   {
+    question: "Combien de formations contient le pack ?",
+    answer: `Le PDF liste ${PRODUCT_STATS.totalFormationCount} titres, soit plus de ${PRODUCT_STATS.formationDisplayCount} formations, répartis en ${PRODUCT_STATS.sourceFolderCount} dossiers : Mega, Google Drive et des liens directs.`,
+  },
+  {
+    question: "Puis-je voir le contenu avant d’acheter ?",
+    answer:
+      `Oui. La section Aperçu montre de vraies captures des dossiers et des ${PRODUCT_STATS.pdfPageCount} pages du PDF.`,
+  },
+  {
+    question: "Que faire si un lien ne fonctionne plus ?",
+    answer: (
+      <>
+        Les dossiers sont hébergés par des tiers et leur disponibilité peut évoluer. Écrivez-nous
+        à <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> et nous vérifierons.
+      </>
+    ),
+  },
+  {
     question: "Qu’est-ce que le Digital Master Pack ?",
     answer:
-      "C’est un PDF catalogue qui rassemble des pistes de formation et des liens vers des ressources autour de l’IA, du business, du marketing, de la création et des outils numériques.",
+      `C’est un PDF de ${PRODUCT_STATS.pdfPageCount} pages qui rassemble plus de ${PRODUCT_STATS.formationDisplayCount} liens vers des ressources autour de l’IA, du business, du marketing, de la création et des outils numériques.`,
   },
   {
     question: "Comment les ressources sont-elles accessibles ?",
@@ -93,8 +141,7 @@ const faq = [
   },
   {
     question: "Quel est le prix du pack ?",
-    answer:
-      "Le Digital Master Pack est proposé à 5 000 FCFA. Le paiement s’effectue sur la page de paiement hébergée par Maketou.",
+    answer: `Le Digital Master Pack est proposé à ${formatFcfa(PRODUCT_STATS.priceFcfa)} FCFA. Le paiement s’effectue sur la page de paiement hébergée par Maketou.`,
   },
   {
     question: "Comment acheter le PDF ?",
@@ -109,6 +156,7 @@ export default function HomePage() {
   return (
     <>
       <Header />
+      <StickyCheckout />
       <main className="w-full">
         <section className="hero" id="accueil">
           <HeroScene />
@@ -119,27 +167,33 @@ export default function HomePage() {
             <div className="hero-copy">
               <p className="eyebrow"><span className="eyebrow-pulse" /> MONEY MAKERS <span className="eyebrow-divider">/</span> ÉDITION DIGITALE</p>
               <h1 className="text-balance">
-                Apprenez.<br />
-                Testez.<br />
-                <span className="gradient-text">Construisez votre prochain projet.</span>
+                {PRODUCT_STATS.formationDisplayCount}+ formations en IA, business, marketing et vidéo.
+                <span className="gradient-text"> Dans un seul PDF.</span>
               </h1>
               <p className="hero-intro">
-                Un PDF catalogue pour explorer des ressources en IA, marketing, création,
-                e-commerce et outils numériques. Choisissez une piste et avancez à votre rythme.
+                Le Digital Master Pack vous donne les liens vers plus de{" "}
+                {PRODUCT_STATS.formationDisplayCount} formations : ChatGPT, Shopify, Python,
+                Facebook Ads, TikTok, montage vidéo, WordPress… Vous choisissez un sujet, vous
+                ouvrez le dossier, vous apprenez.
+              </p>
+              <p className="hero-price">
+                {formatFcfa(PRODUCT_STATS.priceFcfa)} FCFA
+                <span>PDF de {PRODUCT_STATS.pdfPageCount} pages · remis après paiement</span>
               </p>
               <div className="hero-actions">
                 <CheckoutLink className="button button-primary" location="hero">
-                  Obtenir le PDF
+                  {CHECKOUT_CTA_LABEL}
                 </CheckoutLink>
                 <a className="button button-quiet" href="#contenu">
-                  Découvrir le contenu <ArrowDown size={16} aria-hidden="true" />
+                  Voir ce qu’il y a dedans <ArrowDown size={16} aria-hidden="true" />
                 </a>
               </div>
               <div className="hero-facts" aria-label="À savoir sur le produit">
-                <span><FileText size={15} aria-hidden="true" /> PDF catalogue</span>
-                <span><Layers size={15} aria-hidden="true" /> 4 pages</span>
-                <span><ShieldCheck size={15} aria-hidden="true" /> Sans promesse de revenu</span>
+                <span><FileText size={15} aria-hidden="true" /> {PRODUCT_STATS.formationDisplayCount}+ formations</span>
+                <span><Layers size={15} aria-hidden="true" /> {PRODUCT_STATS.topicCount} thématiques</span>
+                <span><ShieldCheck size={15} aria-hidden="true" /> Paiement via Maketou</span>
               </div>
+              <p className="hero-microcopy">Un guide de liens vers des formations, pas une garantie de résultats.</p>
             </div>
 
             <div className="hero-visual" data-hero-visual aria-label="Visuel du Digital Master Pack fourni par Money Makers">
@@ -171,58 +225,66 @@ export default function HomePage() {
           </a>
         </section>
 
+        <StatsBand />
+
         <section className="section section-content" id="contenu">
           <div className="site-container">
             <Reveal className="section-heading section-heading-split">
               <div>
                 <p className="section-kicker"><span>01</span> LE CONTENU, SANS FLOU</p>
-                <h2>Des pistes à explorer.<br /><span className="gradient-text">Le choix reste le vôtre.</span></h2>
+                <h2>Ce que vous recevez<br /><span className="gradient-text">exactement.</span></h2>
               </div>
               <p className="section-lede">
-                Le pack rassemble un catalogue de ressources et vous aide à choisir un premier
-                sujet. Pas besoin de tout suivre d’un coup : commencez par ce qui vous parle.
+                Un PDF de {PRODUCT_STATS.pdfPageCount} pages. Chaque ligne est une formation,
+                chaque ligne est un lien. Tout est classé par thème pour vous aider à choisir par
+                où commencer.
               </p>
             </Reveal>
 
             <div className="topic-grid">
-              {topics.map(({ number, title, text, Icon }, index) => (
-                <Reveal key={number} delay={index * 0.07} className="topic-card-wrap">
+              {topics.map(({ title, examples, Icon }, index) => (
+                <Reveal key={title} delay={index * 0.07} className="topic-card-wrap">
                   <article className="topic-card">
-                    <div className="topic-card-top"><span>{number} / 04</span><Icon size={21} strokeWidth={1.7} aria-hidden="true" /></div>
+                    <div className="topic-card-top"><span>{String(index + 1).padStart(2, "0")} / {String(PRODUCT_STATS.topicCount).padStart(2, "0")}</span><Icon size={21} strokeWidth={1.7} aria-hidden="true" /></div>
                     <h3>{title}</h3>
-                    <p>{text}</p>
+                    <ul className="topic-examples">
+                      {examples.map((example) => <li key={example}>{example}</li>)}
+                    </ul>
                     <span className="topic-line" aria-hidden="true" />
                   </article>
                 </Reveal>
               ))}
             </div>
 
-            <Reveal className="catalogue-strip">
-              <div className="catalogue-art">
-                <Image
-                  src="/media/hero-landscape.webp"
-                  alt="Visuel horizontal Digital Master Pack — Money Makers"
-                  fill
-                  sizes="(max-width: 700px) 100vw, 50vw"
-                  className="catalogue-image"
-                />
-                <span className="art-corner-label">DIGITAL MASTER PACK <span>·</span> MONEY MAKERS</span>
-              </div>
-              <div className="catalogue-copy">
-                <p className="section-kicker"><span>LE GUIDE</span> PDF · 4 PAGES</p>
-                <h3>Un point d’entrée unique<br />vers des ressources variées.</h3>
-                <p>
-                  Le document répertorie des formations, des ressources complémentaires et des
-                  téléchargements liés au numérique. Les liens ouvrent leurs hébergeurs sources.
-                </p>
-                <ul className="catalogue-list">
-                  <li><Check size={16} aria-hidden="true" /> Des sujets classés par grandes pistes</li>
-                  <li><Check size={16} aria-hidden="true" /> Des ressources partagées et des liens directs</li>
-                  <li><Check size={16} aria-hidden="true" /> Un parcours simple pour choisir quoi explorer</li>
-                </ul>
-                <a className="text-link" href="#methode">Voir comment l’utiliser <ArrowRight size={16} aria-hidden="true" /></a>
-              </div>
+            <Reveal className="not-included">
+              <h3>Ce que vous n’obtenez pas</h3>
+              <p>
+                Pas de coaching, pas de promesse de revenus. L’accès aux dossiers dépend de leurs
+                hébergeurs et de leurs autorisations.
+              </p>
             </Reveal>
+          </div>
+        </section>
+
+        <ProductPreview />
+
+        <section className="section section-audience" id="pour-qui">
+          <div className="site-container audience-layout">
+            <Reveal className="audience-heading">
+              <p className="section-kicker"><span>03</span> POUR QUI ?</p>
+              <h2>Pour qui est<br /><span className="gradient-text">ce pack ?</span></h2>
+            </Reveal>
+            <div className="audience-list">
+              {[
+                "Vous débutez et ne savez pas par où commencer : choisissez une thématique.",
+                "Vous cherchez une ressource sur un outil précis : trouvez un sujet en un coup d’œil.",
+                `Vous préférez payer une fois ${formatFcfa(PRODUCT_STATS.priceFcfa)} FCFA plutôt que chercher des ressources une par une.`,
+              ].map((item, index) => (
+                <Reveal key={item} delay={index * 0.06}>
+                  <p className="audience-item"><span>0{index + 1}</span>{item}</p>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -230,11 +292,10 @@ export default function HomePage() {
           <div className="method-glow" aria-hidden="true" />
           <div className="site-container method-layout">
             <Reveal className="method-intro">
-              <p className="section-kicker"><span>02</span> UN DÉMARRAGE SIMPLE</p>
-              <h2>De la curiosité<br />à <span className="gradient-text">la pratique.</span></h2>
+              <p className="section-kicker"><span>04</span> UN DÉMARRAGE SIMPLE</p>
+              <h2>Comment<br /><span className="gradient-text">ça marche ?</span></h2>
               <p>
-                Le guide propose une séquence claire : choisir un sujet, ouvrir sa ressource,
-                apprendre, puis décider de la suite.
+                Quatre étapes pour passer du PDF à la ressource qui vous intéresse.
               </p>
               <div className="method-note"><Sparkles size={17} aria-hidden="true" /><span>À votre rythme. Une seule piste pour commencer.</span></div>
             </Reveal>
@@ -256,8 +317,8 @@ export default function HomePage() {
         <section className="section section-video" id="publicites">
           <div className="site-container">
             <Reveal className="section-heading section-heading-centered">
-              <p className="section-kicker"><span>03</span> L’ESPRIT MONEY MAKERS</p>
-              <h2>Apprendre sans<br /><span className="gradient-text">promesse magique.</span></h2>
+              <p className="section-kicker"><span>05</span> L’ESPRIT MONEY MAKERS</p>
+              <h2>En <span className="gradient-text">3 vidéos.</span></h2>
               <p className="section-lede">
                 Les créations publicitaires fournies présentent le pack avec clarté : choisir une
                 piste, développer des compétences, garder des attentes réalistes.
@@ -306,9 +367,12 @@ export default function HomePage() {
           <div className="offer-halo" aria-hidden="true" />
           <div className="site-container">
             <Reveal className="offer-header">
-              <p className="section-kicker"><span>04</span> VOTRE PROCHAIN PAS</p>
-              <h2>Commencez par<br /><span className="gradient-text">une seule piste.</span></h2>
-              <p>Le Digital Master Pack : un PDF pour découvrir, choisir et explorer à votre rythme.</p>
+              <p className="section-kicker"><span>06</span> VOTRE PROCHAIN PAS</p>
+              <h2>Digital Master<br /><span className="gradient-text">Pack.</span></h2>
+              <p>
+                {PRODUCT_STATS.formationDisplayCount}+ formations, {PRODUCT_STATS.topicCount}{" "}
+                thématiques, 1 PDF.
+              </p>
             </Reveal>
 
             <Reveal className="offer-card-wrap">
@@ -317,19 +381,25 @@ export default function HomePage() {
                   <div className="offer-product-icon"><BookOpen size={24} aria-hidden="true" /></div>
                   <p className="offer-overline">MONEY MAKERS PRÉSENTE</p>
                   <h3>Digital<br /><span>Master Pack</span></h3>
-                  <p className="offer-description">Un catalogue numérique pour apprendre, créer et développer vos compétences.</p>
+                  <p className="offer-description">
+                    {PRODUCT_STATS.formationDisplayCount}+ formations, {PRODUCT_STATS.topicCount}{" "}
+                    thématiques, 1 PDF.
+                  </p>
                   <div className="offer-includes">
-                    <span><Check size={15} aria-hidden="true" /> PDF catalogue de 4 pages</span>
-                    <span><Check size={15} aria-hidden="true" /> Thèmes numériques variés</span>
+                    <span><Check size={15} aria-hidden="true" /> PDF de {PRODUCT_STATS.pdfPageCount} pages</span>
+                    <span><Check size={15} aria-hidden="true" /> {PRODUCT_STATS.topicCount} thématiques</span>
                     <span><Check size={15} aria-hidden="true" /> Liens et pistes à explorer</span>
                   </div>
                 </div>
                 <div className="offer-checkout">
                   <p className="price-label">PRIX</p>
-                  <div className="price-value">5 000<span className="price-currency">FCFA</span></div>
+                  <div className="price-value">{formatFcfa(PRODUCT_STATS.priceFcfa)}<span className="price-currency">FCFA</span></div>
                   <p className="price-unit">PDF numérique <span>·</span> prix en FCFA</p>
+                  <p className="price-per-formation">
+                    soit moins de {formatFcfa(PRODUCT_STATS.pricePerFormationCeilingFcfa)} FCFA par formation
+                  </p>
                   <CheckoutLink className="button button-primary button-full" location="offre">
-                    Acheter le pack
+                    {CHECKOUT_CTA_LABEL}
                   </CheckoutLink>
                   <p className="payment-note"><ShieldCheck size={14} aria-hidden="true" /> Checkout hébergé Maketou</p>
                   {checkoutReady ? null : (
@@ -337,7 +407,7 @@ export default function HomePage() {
                   )}
                 </div>
               </div>
-              <p className="offer-disclaimer">Prix : 5 000 FCFA. Les conditions d’accès aux ressources listées dans le PDF sont celles de leurs hébergeurs.</p>
+              <p className="offer-disclaimer">Prix : {formatFcfa(PRODUCT_STATS.priceFcfa)} FCFA. Les conditions d’accès aux ressources listées dans le PDF sont celles de leurs hébergeurs.</p>
             </Reveal>
           </div>
         </section>
@@ -345,7 +415,7 @@ export default function HomePage() {
         <section className="section section-faq" id="faq">
           <div className="site-container faq-layout">
             <Reveal className="faq-intro">
-              <p className="section-kicker"><span>05</span> BON À SAVOIR</p>
+              <p className="section-kicker"><span>07</span> BON À SAVOIR</p>
               <h2>Les réponses,<br /><span className="gradient-text">sans détour.</span></h2>
               <p>Avant de choisir votre prochaine piste, voici les informations utiles sur le PDF et ses liens.</p>
               <a className="text-link" href="#offre">Voir le prix <ArrowRight size={16} aria-hidden="true" /></a>
@@ -367,10 +437,10 @@ export default function HomePage() {
           <div className="site-container closing-inner">
             <Reveal>
               <p className="section-kicker">LE DIGITAL MASTER PACK · MONEY MAKERS</p>
-              <h2>Une piste. Puis la suivante.</h2>
-              <p>Apprenez. Testez. Construisez votre prochain projet.</p>
+              <h2>Plus de {PRODUCT_STATS.formationDisplayCount} pistes à explorer.</h2>
+              <p>Choisissez un sujet et avancez à votre rythme.</p>
               <CheckoutLink className="button button-primary" location="closing">
-                Découvrir le pack
+                {CHECKOUT_CTA_LABEL}
               </CheckoutLink>
             </Reveal>
             <div className="closing-mark" aria-hidden="true"><span>M</span><i /></div>
@@ -381,7 +451,10 @@ export default function HomePage() {
       <footer className="site-footer">
         <div className="site-container footer-inner">
           <a className="footer-brand" href="#accueil"><span className="footer-mark">M</span><span>MONEY MAKERS<small>DIGITAL MASTER PACK</small></span></a>
-          <p>Un catalogue de ressources numériques. Aucun revenu ou résultat n’est garanti.</p>
+          <p>
+            Un PDF de liens vers des ressources. Leur disponibilité relève de leurs hébergeurs.
+            Contact : <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
+          </p>
           <a className="footer-top" href="#accueil">Retour en haut <ArrowDown size={14} aria-hidden="true" /></a>
         </div>
       </footer>

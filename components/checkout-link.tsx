@@ -7,6 +7,7 @@ type CheckoutLinkProps = {
   children: ReactNode;
   className: string;
   location: string;
+  onClick?: () => void;
 };
 
 function getCheckoutUrl(): string | undefined {
@@ -21,7 +22,12 @@ function getCheckoutUrl(): string | undefined {
   }
 }
 
-export function CheckoutLink({ children, className, location }: CheckoutLinkProps) {
+export function CheckoutLink({
+  children,
+  className,
+  location,
+  onClick,
+}: CheckoutLinkProps) {
   const [notice, setNotice] = useState(false);
   const checkoutUrl = getCheckoutUrl();
 
@@ -34,14 +40,13 @@ export function CheckoutLink({ children, className, location }: CheckoutLinkProp
         rel={checkoutUrl ? "noopener noreferrer" : undefined}
         data-umami-event={checkoutUrl ? "clic-achat" : undefined}
         data-umami-event-emplacement={checkoutUrl ? location : undefined}
-        onClick={
-          checkoutUrl
-            ? undefined
-            : (event) => {
-                event.preventDefault();
-                setNotice(true);
-              }
-        }
+        onClick={(event) => {
+          onClick?.();
+          if (!checkoutUrl) {
+            event.preventDefault();
+            setNotice(true);
+          }
+        }}
       >
         {children}
         <ArrowUpRight size={17} strokeWidth={1.8} aria-hidden="true" />

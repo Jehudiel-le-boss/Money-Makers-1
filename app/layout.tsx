@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { getHttpsUrl, getPublicOrigin } from "../lib/site";
+import { formatFcfa, PRODUCT_STATS } from "../lib/product-stats";
 import "./globals.css";
 
-const title = "Digital Master Pack | Money Makers";
+const title = `Digital Master Pack — ${PRODUCT_STATS.formationDisplayCount}+ formations en un seul PDF | Money Makers`;
 const description =
-  "Un PDF catalogue pour explorer des ressources en IA, marketing, création, e-commerce et outils numériques. Choisissez une piste et avancez à votre rythme.";
+  `Un PDF avec les liens vers ${PRODUCT_STATS.formationDisplayCount}+ formations : ChatGPT, Shopify, Python, Facebook Ads, TikTok, montage vidéo. ${formatFcfa(PRODUCT_STATS.priceFcfa)} FCFA.`;
 
 const siteOrigin = getPublicOrigin();
 const image = "/media/hero-landscape.webp";
@@ -57,8 +58,9 @@ export default function RootLayout({
   const websiteId = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID?.trim();
 
   return (
-    <html lang="fr">
+    <html lang="fr" suppressHydrationWarning>
       <body>
+        <Script src="/theme-init.js" strategy="beforeInteractive" />
         <div className="site-shell">{children}</div>
         {analyticsUrl && websiteId ? (
           <Script

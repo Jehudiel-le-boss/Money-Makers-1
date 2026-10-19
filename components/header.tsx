@@ -2,11 +2,14 @@
 
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { CheckoutLink } from "./checkout-link";
+import { ThemeToggle } from "./theme-toggle";
+import { CHECKOUT_CTA_LABEL } from "../lib/product-stats";
 
 const links = [
   { href: "#contenu", label: "Le contenu" },
-  { href: "#methode", label: "La méthode" },
-  { href: "#publicites", label: "Les vidéos" },
+  { href: "#apercu", label: "Aperçu" },
+  { href: "#methode", label: "Comment ça marche" },
   { href: "#faq", label: "FAQ" },
 ];
 
@@ -40,16 +43,19 @@ export function Header() {
           <BrandMark />
         </a>
 
-        <button
-          className="menu-toggle"
-          type="button"
-          aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
-          aria-expanded={open}
-          aria-controls="primary-navigation"
-          onClick={() => setOpen((value) => !value)}
-        >
-          {open ? <X size={21} /> : <Menu size={21} />}
-        </button>
+        <div className="header-tools">
+          <ThemeToggle />
+          <button
+            className="menu-toggle"
+            type="button"
+            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-expanded={open}
+            aria-controls="primary-navigation"
+            onClick={() => setOpen((value) => !value)}
+          >
+            {open ? <X size={21} /> : <Menu size={21} />}
+          </button>
+        </div>
 
         <nav
           id="primary-navigation"
@@ -61,9 +67,13 @@ export function Header() {
               {link.label}
             </a>
           ))}
-          <a className="header-cta" href="#offre" onClick={() => setOpen(false)}>
-            Voir le pack <span aria-hidden="true">↗</span>
-          </a>
+          <CheckoutLink
+            className="header-cta"
+            location="header"
+            onClick={() => setOpen(false)}
+          >
+            {CHECKOUT_CTA_LABEL}
+          </CheckoutLink>
         </nav>
       </div>
     </header>

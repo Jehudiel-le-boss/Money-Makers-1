@@ -1,6 +1,7 @@
 # Digital Master Pack — Money Makers
 
 Landing page de vente Next.js + TypeScript + Tailwind CSS conçue à partir des visuels et vidéos du ZIP fourni.
+La page présente les 60+ formations référencées, les quatre thématiques, des captures des dossiers sources et un aperçu navigable des quatre pages du PDF. Les chiffres affichés sont centralisés dans `lib/product-stats.ts`; les liens vers les ressources restent soumis aux autorisations et à la disponibilité de leurs hébergeurs.
 
 ## Développement
 
