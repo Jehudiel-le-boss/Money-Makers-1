@@ -23,6 +23,18 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+* {
+  scrollbar-color: var(--electric) var(--background);
+  scrollbar-width: thin;
+}
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb {
+  border: 3px solid var(--background);
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--ice), var(--electric));
+}
+::-webkit-scrollbar-thumb:hover { background: var(--ice); }
 body {
   margin: 0;
   background: var(--background);
@@ -295,6 +307,31 @@ img, video { display: block; }
   .topic-card { min-height: 190px; }
   .trust-panel { grid-template-columns: 55px 1fr; }
   .trust-badge { grid-column: 2; width: max-content; }
+}
+
+@media (min-width: 761px) and (max-width: 1050px) {
+  .header-inner { min-height: 70px; }
+  .menu-toggle { display: grid; }
+  .header-nav {
+    position: absolute;
+    top: calc(100% + 1px);
+    right: -24px;
+    left: -24px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    border-bottom: 1px solid rgba(153,202,255,.14);
+    padding: 9px 24px 19px;
+    background: rgba(5,9,19,.97);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity .2s ease, transform .2s ease;
+  }
+  .header-nav.is-open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .header-nav > a:not(.header-cta) { border-bottom: 1px solid rgba(153,202,255,.08); padding: 13px 3px; }
+  .header-cta { justify-content: center; margin-top: 13px; padding-block: 12px; }
 }
 
 @media (max-width: 760px) {
@@ -618,7 +655,7 @@ html.theme-transitioning .trust-panel {
   .sticky-checkout { border-color: rgba(26, 72, 111, .2); background: rgba(247, 250, 254, .96); }
   .sticky-checkout-price { color: #102238; }
   .menu-toggle { border-color: rgba(26, 72, 111, .2); }
-  @media (max-width: 760px) {
+  @media (max-width: 1050px) {
     .header-nav { background: rgba(248, 251, 255, .98); }
     .header-nav > a:not(.header-cta) { border-color: rgba(26, 72, 111, .1); }
   }

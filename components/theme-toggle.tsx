@@ -7,11 +7,7 @@ type Theme = "light" | "dark";
 
 function getCurrentTheme(): Theme {
   const theme = document.documentElement.dataset.theme;
-  return theme === "light" || theme === "dark"
-    ? theme
-    : window.matchMedia("(prefers-color-scheme: light)").matches
-      ? "light"
-      : "dark";
+  return theme === "light" ? "light" : "dark";
 }
 
 export function ThemeToggle() {

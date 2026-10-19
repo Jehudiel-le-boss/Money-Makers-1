@@ -8,7 +8,7 @@ try {
 }
 
 if (theme !== "light" && theme !== "dark") {
-  theme = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+  theme = "dark";
 }
 
 document.documentElement.dataset.theme = theme;
