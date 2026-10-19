@@ -10,6 +10,7 @@ import {
   Clapperboard,
   FileText,
   Layers,
+  MessageCircle,
   ShieldCheck,
   Sparkles,
   Video,
@@ -147,6 +148,11 @@ const faq = [
     question: "Comment acheter le PDF ?",
     answer:
       "Le bouton d’achat ouvre le checkout hébergé par Maketou. Après le paiement, le PDF vous est remis selon les modalités indiquées sur la page de paiement.",
+  },
+  {
+    question: "Le pack inclut-il un accès à la communauté WhatsApp ?",
+    answer:
+      "Oui. L’achat du Digital Master Pack inclut un bonus : l’accès à la communauté WhatsApp privée Money Makers. Le lien d’invitation est envoyé automatiquement après le paiement. Il est réservé aux acheteurs et ne doit pas être partagé.",
   },
 ];
 
@@ -389,6 +395,25 @@ export default function HomePage() {
                     <span><Check size={15} aria-hidden="true" /> PDF de {PRODUCT_STATS.pdfPageCount} pages</span>
                     <span><Check size={15} aria-hidden="true" /> {PRODUCT_STATS.topicCount} thématiques</span>
                     <span><Check size={15} aria-hidden="true" /> Liens et pistes à explorer</span>
+                  </div>
+                  <div className="community-bonus">
+                    <div className="community-bonus-heading">
+                      <span className="community-bonus-icon"><MessageCircle size={17} aria-hidden="true" /></span>
+                      <span className="community-bonus-label">BONUS INCLUS</span>
+                    </div>
+                    <h4>Rejoignez Money Makers sur WhatsApp</h4>
+                    <p>
+                      Retrouvez des ressources utiles, des formations gratuites, des conseils
+                      pratiques et des opportunités pour développer vos compétences. Des
+                      formations premium et contenus exclusifs arriveront progressivement.
+                    </p>
+                    <p className="community-bonus-note">
+                      Votre lien d’invitation vous sera envoyé automatiquement après paiement.
+                      L’accès est réservé aux acheteurs : merci de ne pas partager ce lien.
+                    </p>
+                    <p className="community-bonus-signoff">
+                      Apprenez, progressez et profitez pleinement des ressources à votre disposition.
+                    </p>
                   </div>
                 </div>
                 <div className="offer-checkout">
